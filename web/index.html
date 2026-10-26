@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>深度研究助手</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <span id="crumb" hidden>新课题</span>
+
+  <section id="welcome" class="launch-page">
+    <div class="launch-card">
+      <div class="product-title">
+        <span class="logo">◆</span>
+        <div><h1>深度研究助手</h1><p>结合多轮智能检索与总结，实时呈现研究进度与引用。</p></div>
+      </div>
+      <form id="form">
+        <label for="topic">研究主题</label>
+        <textarea id="topic" minlength="4" maxlength="2000" placeholder="例如：Datawhale 是一个什么样的组织？" required></textarea>
+        <label for="depth">研究深度</label>
+        <select id="depth">
+          <option value="standard">标准研究 · 3 个子任务</option>
+          <option value="deep">深入研究 · 5 个子任务</option>
+        </select>
+        <label for="searchProvider">搜索引擎</label>
+        <select id="searchProvider" disabled><option>OpenAI Web Search · 已配置</option></select>
+        <button class="primary" id="start">开始研究</button>
+      </form>
+      <div class="launch-foot"><span id="connection">正在检查服务…</span><span>研究将使用 API 额度</span></div>
+    </div>
+  </section>
+
+  <section id="workspace" class="research-shell" hidden>
+    <aside class="research-sidebar">
+      <button class="back" id="new">‹ 返回新研究</button>
+      <div class="side-brand"><span class="logo small">◆</span><div><b>深度研究助手</b><small>DEEP RESEARCH</small></div></div>
+      <div class="topic-box"><span>研究主题</span><h2 id="jobtitle"></h2></div>
+      <div class="overall">
+        <div><span>总体进度</span><b id="counts">0 / 0</b></div>
+        <div class="progress"><div id="bar"></div></div>
+        <p id="jobstatus">准备中</p>
+      </div>
+      <div class="side-actions">
+        <button id="pause">暂停后续步骤</button>
+        <button id="continue" class="primary" hidden>继续研究</button>
+        <button id="export" disabled>导出 Markdown</button>
+      </div>
+      <div class="history-head"><span>历史研究</span><button id="refresh" title="刷新">↻</button></div>
+      <div id="history"></div>
+      <button class="new-bottom" onclick="document.querySelector('#new').click()">＋ 开始新研究</button>
+    </aside>
+
+    <main class="research-main">
+      <header class="topbar"><span><b>研究工作台</b> · TODO 驱动的顺序协作</span><span id="connectionMirror">OpenAI Web Search</span></header>
+      <div id="error" role="alert" hidden></div>
+      <div class="work-grid">
+        <section class="task-column">
+          <div class="column-title"><div><small>RESEARCH PLAN</small><h3>任务列表</h3></div><span>实时更新</span></div>
+          <div id="quality"></div>
+          <div id="tasks"></div>
+          <div class="agent-section"><h3>Agent 协作</h3><div id="agents"></div></div>
+          <div class="loghead"><b>进度日志</b><small>实时 SSE</small></div>
+          <div id="logs" aria-live="polite"></div>
+        </section>
+
+        <section class="result-column">
+          <div class="source-block">
+            <div class="column-title"><div><small>SEARCH RESULTS</small><h3>搜索来源</h3></div><span><b id="sourcecount">0</b> 条</span></div>
+            <div id="sources" class="source-list"><p class="empty-copy">检索开始后，来源会显示在这里。</p></div>
+          </div>
+          <div class="notes-block">
+            <div class="column-title"><div><small>RESEARCH NOTES</small><h3>任务总结</h3></div></div>
+            <div id="notes" class="notes-list"><p class="empty-copy">每个子任务完成后生成结构化笔记。</p></div>
+          </div>
+          <div class="report-block">
+            <div class="column-title sticky-title"><div><small>FINAL REPORT</small><h3>最终报告</h3></div></div>
+            <article id="report" class="report"><div class="empty-report"><span>◇</span><p>报告将在全部研究任务完成后生成。</p></div></article>
+          </div>
+        </section>
+      </div>
+    </main>
+  </section>
+  <div id="toast" role="status" hidden></div>
+  <script src="/app.js"></script>
+  <script src="/architecture.js"></script>
+</body>
+</html>
